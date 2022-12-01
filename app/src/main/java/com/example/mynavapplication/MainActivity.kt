@@ -3,7 +3,9 @@ package com.example.mynavapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.mynavapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +18,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         // 액션바 세팅
         val navController = binding.frgNav.getFragment<NavHostFragment>().navController
-        setupActionBarWithNavController(navController)
+        //
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.aboutFragment, R.id.examineFragment, R.id.settingsFragment)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNav.setupWithNavController(navController)
         setContentView(binding.root)
 
     }
@@ -25,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = binding.frgNav.getFragment<NavHostFragment>().navController
         return navController.navigateUp() || super.onSupportNavigateUp()
-
     }
+
+    //네비게이션과 바텀 네비게이션 연결
+
 }
