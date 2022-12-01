@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mynavapplication.databinding.FragmentResultBinding
 
 class resultFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var mbtiResult: String? = null
 
 
@@ -30,11 +30,18 @@ class resultFragment : Fragment() {
         return binding?.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.txtResult?.text = mbtiResult
         binding?.btnReexamine?.setOnClickListener {
             findNavController().navigate(R.id.action_resultFragment_to_examineFragment)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

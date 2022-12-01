@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.mynavapplication.databinding.FragmentExamineBinding
 
@@ -20,11 +21,29 @@ class examineFragment : Fragment() {
         return binding?.root
     }
 
+    fun examineMBTI() : String{
+        // binding이 null이 아닐 때
+        binding?.let {
+            val ieStr = if (it.chkE.isChecked) "E" else "I"
+            val snStr = if (it.chkN.isChecked) "N" else "S"
+            val tfStr = if (it.chkF.isChecked) "F" else "T"
+            val jpStr = if (it.chkJ.isChecked) "J" else "P"
+
+            return ieStr + snStr + tfStr + jpStr
+        }
+        return " " //binding이 널일 때
+    }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.btnResult?.setOnClickListener {
-            findNavController().navigate(R.id.action_examineFragment_to_resultFragment)
+            val result = examineMBTI()
+            val bundle = bundleOf("MBTI" to result)
+            // result fragmen에 bundle 전달
+            findNavController().navigate(R.id.action_examineFragment_to_resultFragment, bundle)
         }
     }
 }
